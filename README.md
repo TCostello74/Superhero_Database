@@ -1,0 +1,1 @@
+https://superheroapi.com/?ref=apilist.fun
