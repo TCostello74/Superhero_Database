@@ -46,5 +46,30 @@ class User(db.Model):
             return u
         else:
             return False
+        
+
+class Hero(db.Model):
+    """Hero"""
+
+    __tablename__ = "heroes"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+
+
+class Favorite(db.Model):
+    """Link User and favorite Heroes"""
+
+    __tablename__ = "favorites"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    hero_id = db.Column(db.Integer, db.ForeignKey('heroes.id'), nullable=False)
+
+    user = db.relationship('User', backref='favorites')
+    hero = db.relationship('Hero', backref='favorited_by')
+
+
     
 

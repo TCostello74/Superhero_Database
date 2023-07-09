@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img class="bd-placeholder-img card-img-top" src="{{ hero['image']['url'] }}" alt="{{ hero['name'] }}">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h1 class="mb-4">{{ hero['name'] }}</h1>
+            
+            <form action="/favorites/add" method="POST">
+                <input type="hidden" name="hero_id" value="{{ hero.id }}">
+                <input type="submit" value="Add to Favorites">
+            </form>
+            
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title">Biography</h2>
+                    <p class="card-text"> {{ hero['biography']['full-name'] }}</p>
+                    <p class="card-text"> {{ hero['biography']['place-of-birth'] }}</p>
+                    <p class="card-text">Publisher: {{ hero['biography']['publisher'] }}</p>
+                    <p class="card-text">Alignment: {{ hero['biography']['alignment'] }}</p>
+                </div>
+            </div>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title">Appearance</h2>
+                    <p class="card-text">Gender: {{ hero['appearance']['gender'] }}</p>
+                    <p class="card-text">Race: {{ hero['appearance']['race'] }}</p>
+                    <p class="card-text">Height: {{ hero['appearance']['height'] }}</p>
+                    <p class="card-text">Weight: {{ hero['appearance']['weight'] }}</p>
+                    <p class="card-text">Eye-color: {{ hero['appearance']['eye-color'] }}</p>
+                    <p class="card-text">Hair-color: {{ hero['appearance']['hair-color'] }}</p>
+                </div>
+            </div>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title">Powerstats</h2>
+                    <p class="card-text">Intelligence: {{ hero['powerstats']['intelligence'] }}</p>
+                    <p class="card-text">Strength: {{ hero['powerstats']['strength'] }}</p>
+                    <p class="card-text">Speed: {{ hero['powerstats']['speed'] }}</p>
+                    <p class="card-text">Durability: {{ hero['powerstats']['durability'] }}</p>
+                    <p class="card-text">Power: {{ hero['powerstats']['power'] }}</p>
+                    <p class="card-text">Combat: {{ hero['powerstats']['combat'] }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

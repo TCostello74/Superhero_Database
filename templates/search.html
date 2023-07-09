@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="display-1">Hero Search</h1>
+<p class="lead">Enter Hero Name Below</p>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.hero_name.label }} {{ form.hero_name() }}
+    <input type="submit" value="Search">
+</form>
+
+{% endblock %}

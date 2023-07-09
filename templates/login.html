@@ -2,8 +2,8 @@
 
 {% block content %}
 
-<h1 class="display-1">Sign Up</h1>
-<p class="lead">Register to gain access!</p>
+<h1 class="display-1">Login</h1>
+<p class="lead">Login Below. Don't have an account? <a href="/register">Register Here</a></p>
 
 <form method="POST">
     {{ form.hidden_tag() }}
@@ -17,10 +17,11 @@
        {% for error in field.errors %}
        <span class="form-text text-danger">{{ error }}</span> 
        {% endfor %}
+
     </p>
     {% endfor %}
 
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-primary">Login</button>
 </form>
 
 {% endblock %}
