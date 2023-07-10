@@ -11,18 +11,19 @@
             </div>
         </div>
         <div class="col-md-8">
-            <h1 class="mb-4">{{ hero['name'] }}</h1>
-            
-            <form action="/favorites/add" method="POST">
-                <input type="hidden" name="hero_id" value="{{ hero.id }}">
-                <input type="submit" value="Add to Favorites">
-            </form>
-            
+            <div class="d-flex align-items-center">
+                <h1 class="mb-2 mr-2" style="margin-right: 20px;">{{ hero['name'] }}</h1>
+                
+                <form action="/favorites/add" method="POST">
+                    <input type="hidden" name="hero_id" value="{{ hero['id'] }}">
+                    <input type="submit" value="Add to Favorites" class="btn btn-primary">
+                </form>
+            </div>
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     <h2 class="card-title">Biography</h2>
-                    <p class="card-text"> {{ hero['biography']['full-name'] }}</p>
-                    <p class="card-text"> {{ hero['biography']['place-of-birth'] }}</p>
+                    <p class="card-text">AKA: {{ hero['biography']['full-name'] }}</p>
+                    <p class="card-text">Place of birth: {{ hero['biography']['place-of-birth'] }}</p>
                     <p class="card-text">Publisher: {{ hero['biography']['publisher'] }}</p>
                     <p class="card-text">Alignment: {{ hero['biography']['alignment'] }}</p>
                 </div>

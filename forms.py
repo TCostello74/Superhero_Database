@@ -18,3 +18,4 @@ class SearchForm(FlaskForm):
     """Hero Search"""
 
     hero_name = StringField('Hero Name', validators=[DataRequired()])
+

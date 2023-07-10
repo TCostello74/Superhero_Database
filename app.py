@@ -14,10 +14,11 @@ app.config['SECRET_KEY'] = "123abc"
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 
+
 connect_db(app)
 db.create_all()
 
-# toolbar = DebugToolbarExtension(app)
+toolbar = DebugToolbarExtension(app)
 
 
 @app.route("/")
@@ -39,6 +40,7 @@ def register_user():
 
         db.session.add(new_user)
         db.session.commit()
+        session['user_id'] = new_user.id
         flash('Welcome! Successfully Created Your Account!')
         return redirect('/')
 
@@ -55,6 +57,8 @@ def login_user():
 
         user = User.authenticate(username, password)
         if user:
+            flash(f"Welcome Back, {user.username}!")
+            session['user_id'] = user.id
             return redirect('/search')
         else:
             form.username.errors = ['Invalid username/password!']
@@ -95,6 +99,7 @@ def show_hero(hero_name):
             matching_heroes = [item for item in data['results'] if item['name'].lower() == hero_name.lower()]
             if len(matching_heroes) == 1:
                 hero = matching_heroes[0]
+                
             elif len(matching_heroes) > 1:
                 return render_template('select_hero.html', heroes=matching_heroes)
             else:
@@ -103,6 +108,13 @@ def show_hero(hero_name):
     else:
         flash('Hero not found!')
         return redirect('/search')
+    
+    hero_in_db = Hero.query.get(hero['id'])
+    # if the hero does not exist in the database, add them
+    if hero_in_db is None:
+        new_hero = Hero(id=hero['id'], name=hero['name'])
+        db.session.add(new_hero)
+        db.session.commit()
 
     return render_template('hero.html', hero=hero)
 
@@ -112,12 +124,19 @@ def show_hero(hero_name):
 
 @app.route('/favorites/add', methods=['POST'])
 def add_favorite():
-    if 'username' not in session:
+    if 'user_id' not in session:
         flash('You must be logged in to do that.')
         return redirect('/')
-    
-    user = User.query.filter_by(username=session['username']).first()
+
+    user = User.query.get(session['user_id'])
     hero_id = request.form['hero_id']
+    
+
+    # Check if the hero exists
+    hero = Hero.query.get(hero_id)
+    if hero is None:
+        flash('Invalid hero ID.')
+        return redirect('/')
 
     # Check if this hero is already a favorite
     if Favorite.query.filter_by(user_id=user.id, hero_id=hero_id).first() is not None:
@@ -133,13 +152,14 @@ def add_favorite():
 
 
 
+
 @app.route('/favorites')
 def show_favorites():
-    if 'username' not in session:
+    if 'user_id' not in session:
         flash('You must be logged in to do that.')
         return redirect('/')
     
-    user = User.query.filter_by(username=session['username']).first()
+    user = User.query.get(session['user_id'])
     favorites = Favorite.query.filter_by(user_id=user.id).all()
 
     return render_template('favorites.html', favorites=favorites)
@@ -156,8 +176,6 @@ def show_favorites():
 
 
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
 
 
 # token = 2244675209060970
