@@ -1,5 +1,74 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-<h1>Home</h1>
+<div class="container text-center py-5">
+    <h1 class="text-warning" style="margin-bottom: 20px"><u>Welcome to Hero HQ!</u></h1>
+    <!-- <h2 class="text-info"><a href="/">efresh</a> to see more heroes. Or <a href="/search">search</a> for your favorites!</h2> -->
+    <p>
+      <a href="/" class="btn btn-secondary btn-lg">Click to see more Heroes!</a>
+    </p>
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-4 mb-4 mx-1">
+            <div class="card border-secondary" style="margin-right: 30px;">
+                <div class="d-flex justify-content-center">
+                    <img src="{{ superheroes[0].image.url }}" alt="{{ superheroes[0].name }}" class="img-fluid rounded">
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title text-body-secondary" style="margin-bottom: 20px;"><u>{{ superheroes[0].name }}</u></h1>
+                    <h4 class="card-subtitle mb-2 text-warning"><u>Biography</u></h4>
+                    <p class="card-text">AKA: {{ superheroes[0].biography['full-name'] }}</p>
+                    <p class="card-text">Place of birth: {{ superheroes[0].biography['place-of-birth'] }}</p>
+                    <p class="card-text">Publisher: {{ superheroes[0].biography['publisher'] }}</p>
+                    <p class="card-text">Alignment: {{ superheroes[0].biography['alignment'] }}</p>
+                    <h4 class="card-subtitle mb-2 text-warning"><u>Appearance</u></h4>
+                    <p class="card-text">Gender: {{ superheroes[0].appearance['gender'] }}</p>
+                    <p class="card-text">Race: {{ superheroes[0].appearance['race'] }}</p>
+                    <p class="card-text">Height: {{ superheroes[0].appearance['height'] }}</p>
+                    <p class="card-text">Weight: {{ superheroes[0].appearance['weight'] }}</p>
+                    <p class="card-text">Eye-color: {{ superheroes[0].appearance['eye-color'] }}</p>
+                    <p class="card-text">Hair-color: {{ superheroes[0].appearance['hair-color'] }}</p>
+                    <h4 class="card-subtitle mb-2 text-warning"><u>Powerstats</u></h4>
+                    <p class="card-text">Intelligence: {{ superheroes[0].powerstats['intelligence'] }}</p>
+                    <p class="card-text">Strength: {{ superheroes[0].powerstats['strength'] }}</p>
+                    <p class="card-text">Speed: {{ superheroes[0].powerstats['speed'] }}</p>
+                    <p class="card-text">Durability: {{ superheroes[0].powerstats['durability'] }}</p>
+                    <p class="card-text">Power: {{ superheroes[0].powerstats['power'] }}</p>
+                    <p class="card-text">Combat: {{ superheroes[0].powerstats['combat'] }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4 mx-1">
+            <div class="card border-secondary" style="margin-left: 30px;">
+                <div class="d-flex justify-content-center">
+                    <img src="{{ superheroes[1].image.url }}" alt="{{ superheroes[1].name }}" class="img-fluid rounded">
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title text-body-secondary" style="margin-bottom: 20px;"><u>{{ superheroes[1].name }}</u></h1>
+                    <h4 class="card-subtitle mb-2 text-warning"><u>Biography</u></h4>
+                    <p class="card-text">AKA: {{ superheroes[1].biography['full-name'] }}</p>
+                    <p class="card-text">Place of birth: {{ superheroes[1].biography['place-of-birth'] }}</p>
+                    <p class="card-text">Publisher: {{ superheroes[1].biography['publisher'] }}</p>
+                    <p class="card-text">Alignment: {{ superheroes[1].biography['alignment'] }}</p>
+                    <h4 class="card-subtitle mb-2 text-warning"><u>Appearance</u></h4>
+                    <p class="card-text">Gender: {{ superheroes[1].appearance['gender'] }}</p>
+                    <p class="card-text">Race: {{ superheroes[1].appearance['race'] }}</p>
+                    <p class="card-text">Height: {{ superheroes[1].appearance['height'] }}</p>
+                    <p class="card-text">Weight: {{ superheroes[1].appearance['weight'] }}</p>
+                    <p class="card-text">Eye-color: {{ superheroes[1].appearance['eye-color'] }}</p>
+                    <p class="card-text">Hair-color: {{ superheroes[1].appearance['hair-color'] }}</p>
+                    <h4 class="card-subtitle mb-2 text-warning"><u>Powerstats</u></h4>
+                    <p class="card-text">Intelligence: {{ superheroes[1].powerstats['intelligence'] }}</p>
+                    <p class="card-text">Strength: {{ superheroes[1].powerstats['strength'] }}</p>
+                    <p class="card-text">Speed: {{ superheroes[1].powerstats['speed'] }}</p>
+                    <p class="card-text">Durability: {{ superheroes[1].powerstats['durability'] }}</p>
+                    <p class="card-text">Power: {{ superheroes[1].powerstats['power'] }}</p>
+                    <p class="card-text">Combat: {{ superheroes[1].powerstats['combat'] }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+

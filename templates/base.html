@@ -12,23 +12,32 @@
 <nav class="navbar navbar-light bg-primary justify-content-between ">
     <div class="container">
         <div class="d-flex align-items-center">
-            <a href="/" class="navbar-brand text-warning" style="margin-right: 30px;"><b>SUPERHERO HQ</b></a>
+            <a href="/" class="navbar-brand text-warning" style="margin-right: 30px;"><b>HERO HQ</b></a>
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item" style="margin-right: 20px;">
                     <a class="nav-link pr-3 text-success" href="/search"><b>Search</b></a>
                 </li>
                 <li class="nav-item" style="margin-right: 20px;">
-                    <a class="nav-link pr-3 text-warning" href="/favorites"><b>Favorites</b></a>
+                    <a class="nav-link pr-3 text-danger" href="/favorites"><b>Favorites</b></a>
                 </li>
             </ul>
         </div>
         <ul class="nav navbar-nav flex-row float-right">
+            {% if session['user_id'] %}
             <li class="nav-item" style="margin-right: 20px;">
-                <a class="nav-link pr-3 text-light" href="/login"><b>Log in</b></a>
+                <a class="nav-link pr-3 text-light" href=""><b>Hello, {{ session['username'] }}</b></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link pr-3 text-light" href="/logout"><b>Logout</b></a>
+            </li>
+            {% else %}
+            <li class="nav-item" style="margin-right: 20px;">
+                <a class="nav-link pr-3 text-light" href="/login"><b>Login</b></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-light" href="/register"><b>Register</b></a>
             </li>
+            {% endif %}
         </ul>
     </div>
 </nav>

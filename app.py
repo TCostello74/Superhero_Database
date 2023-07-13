@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, flash, request, session
 from flask_debugtoolbar import DebugToolbarExtension
+from random import randint
 from models import connect_db, db, User, Favorite, Hero
 from forms import UserForm, SearchForm
 import requests
@@ -23,7 +24,19 @@ toolbar = DebugToolbarExtension(app)
 
 @app.route("/")
 def home_page():
-    return render_template('home.html')
+    api_key = '2244675209060970'  
+    total_number_of_superheroes = 731
+
+    def get_random_superhero():
+        random_id = randint(1, total_number_of_superheroes)
+        response = requests.get(f'https://superheroapi.com/api/{api_key}/{random_id}')
+        return response.json()
+
+    # get two random superheroes
+    superheroes = [get_random_superhero(), get_random_superhero()]
+
+    return render_template('home.html', superheroes=superheroes)
+    
 
 
 #######################################################################################
@@ -64,6 +77,12 @@ def login_user():
             form.username.errors = ['Invalid username/password!']
 
     return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout_user():
+    session.pop('user_id')
+    flash('Goodbye!')
+    return redirect('/login')
 
 
 #######################################################################################
@@ -126,7 +145,7 @@ def show_hero(hero_name):
 def add_favorite():
     if 'user_id' not in session:
         flash('You must be logged in to do that.')
-        return redirect('/')
+        return redirect('/login')
 
     user = User.query.get(session['user_id'])
     hero_id = request.form['hero_id']

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>My Favorites</h1>
+    <h1 class="text-danger">My Favorites</h1>
+    <p><a class="text-success" href="/search">Click here</a> to search for Heroes!</p>
     <ul>
     {% for favorite in favorites %}
         <li>
