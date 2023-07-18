@@ -144,6 +144,7 @@ def show_hero(hero_name):
 
 @app.route('/favorites/add', methods=['POST'])
 def add_favorite():
+    """Adds a favorite to the users favorite page"""
     if 'user_id' not in session:
         flash('You must be logged in to do that.')
         return redirect('/login')
@@ -167,7 +168,7 @@ def add_favorite():
     db.session.commit()
 
     flash('Hero added to favorites!')
-    return redirect(f'/hero/{hero.name}')  # redirect with hero's name
+    return redirect('/favorites')  # redirect with hero's name
 
 
 
@@ -184,6 +185,26 @@ def show_favorites():
 
     return render_template('favorites.html', favorites=favorites)
 
+
+@app.route('/favorites/delete', methods=['POST'])
+def delete_favorite():
+    if 'user_id' not in session:
+        flash('You must be logged in to do that.')
+        return redirect('/login')
+
+    user = User.query.get(session['user_id'])
+    hero_id = request.form['hero_id']
+
+    favorite = Favorite.query.filter_by(user_id=user.id, hero_id=hero_id).first()
+    if favorite is None:
+        flash('Favorite not found.')
+        return redirect('/favorites')
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    flash('Favorite deleted!')
+    return redirect('/favorites')
 
 
 

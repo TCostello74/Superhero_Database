@@ -12,8 +12,12 @@
                     <p class="text-center"><a class="btn btn-success" href="/search">Click here</a> to search for Heroes!</p>
                     <ul class="list-group list-group-flush">
                         {% for favorite in favorites %}
-                        <li class="list-group-item">
-                            <a href="/hero/{{ favorite.hero.name }}" class="d-flex justify-content-center">{{ favorite.hero.name }}</a>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="/hero/{{ favorite.hero.name }}">{{ favorite.hero.name }}</a>
+                            <form action="/favorites/delete" method="post" class="inline">
+                                <input type="hidden" name="hero_id" value="{{ favorite.hero.id }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
                         </li>
                         {% endfor %}
                     </ul>
