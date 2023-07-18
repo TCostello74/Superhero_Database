@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container text-center vh-100 d-flex align-items-center justify-content-center card border-secondary">
+    <div>
+        <h1 class="display-2 text-success">HERO SEARCH</h1>
+        <p class="lead fs-2 text-success">Enter Hero Name Below</p>
 
-<h1 class="display-1">Hero Search</h1>
-<p class="lead">Enter Hero Name Below</p>
-
-<form method="POST">
-    {{ form.hidden_tag() }}
-    {{ form.hero_name.label }} {{ form.hero_name() }}
-    <input type="submit" value="Search">
-</form>
-
+        <form method="POST" class="d-flex flex-column align-items-center">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.hero_name(class="form-control form-control-lg translucent-input text-center", placeholder="Hero Name") }}
+            </div>
+            <input type="submit" value="Search" class="btn btn-primary btn-lg mt-3 px-5 py-2 fs-4">
+        </form>
+    </div>
+</div>
 {% endblock %}

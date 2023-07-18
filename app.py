@@ -72,7 +72,8 @@ def login_user():
         if user:
             flash(f"Welcome Back, {user.username}!")
             session['user_id'] = user.id
-            return redirect('/search')
+            session['username'] = user.username
+            return redirect('/')
         else:
             form.username.errors = ['Invalid username/password!']
 
@@ -81,7 +82,8 @@ def login_user():
 @app.route('/logout')
 def logout_user():
     session.pop('user_id')
-    flash('Goodbye!')
+    session.pop('username', None)
+    flash(f'Goodbye!')
     return redirect('/login')
 
 
@@ -97,7 +99,6 @@ def search_hero():
         return redirect(f'/hero/{hero_name}')
 
     return render_template('search.html', form=form)
-
 
 
 @app.route('/hero/<hero_name>', methods=['GET', 'POST'])
@@ -149,7 +150,6 @@ def add_favorite():
 
     user = User.query.get(session['user_id'])
     hero_id = request.form['hero_id']
-    
 
     # Check if the hero exists
     hero = Hero.query.get(hero_id)
@@ -160,14 +160,15 @@ def add_favorite():
     # Check if this hero is already a favorite
     if Favorite.query.filter_by(user_id=user.id, hero_id=hero_id).first() is not None:
         flash('This hero is already in your favorites.')
-        return redirect(f'/hero/{hero_id}')
+        return redirect(f'/hero/{hero.name}')
 
     new_favorite = Favorite(user_id=user.id, hero_id=hero_id)
     db.session.add(new_favorite)
     db.session.commit()
 
     flash('Hero added to favorites!')
-    return redirect(f'/hero/{hero_id}')
+    return redirect(f'/hero/{hero.name}')  # redirect with hero's name
+
 
 
 
@@ -176,7 +177,7 @@ def add_favorite():
 def show_favorites():
     if 'user_id' not in session:
         flash('You must be logged in to do that.')
-        return redirect('/')
+        return redirect('/login')
     
     user = User.query.get(session['user_id'])
     favorites = Favorite.query.filter_by(user_id=user.id).all()
