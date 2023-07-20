@@ -5,7 +5,6 @@ from models import connect_db, db, User, Favorite, Hero
 from forms import UserForm, SearchForm
 import requests
 
-# CURR_USER_KEY = "curr_user"
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///superhero-app'
@@ -24,10 +23,12 @@ toolbar = DebugToolbarExtension(app)
 
 @app.route("/")
 def home_page():
+    """display home page with 2 randomly generated heroes"""
     api_key = '2244675209060970'  
     total_number_of_superheroes = 731
 
     def get_random_superhero():
+        """function to get random heroes"""
         random_id = randint(1, total_number_of_superheroes)
         response = requests.get(f'https://superheroapi.com/api/{api_key}/{random_id}')
         return response.json()
@@ -45,6 +46,7 @@ def home_page():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
+    """register a new user"""
     form = UserForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -54,6 +56,7 @@ def register_user():
         db.session.add(new_user)
         db.session.commit()
         session['user_id'] = new_user.id
+        session['username'] = new_user.username
         flash('Welcome! Successfully Created Your Account!')
         return redirect('/')
 
@@ -63,6 +66,7 @@ def register_user():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_user():
+    """log in existing user"""
     form = UserForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -81,6 +85,7 @@ def login_user():
 
 @app.route('/logout')
 def logout_user():
+    """logout current user"""
     session.pop('user_id')
     session.pop('username', None)
     flash(f'Goodbye!')
@@ -93,6 +98,7 @@ def logout_user():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search_hero():
+    """Search for specific hero, using their name"""
     form = SearchForm()
     if form.validate_on_submit():
         hero_name = form.hero_name.data
@@ -103,6 +109,13 @@ def search_hero():
 
 @app.route('/hero/<hero_name>', methods=['GET', 'POST'])
 def show_hero(hero_name):
+    """
+    request hero data from superhero api
+    
+    If searched name exists.
+    If multiple heroes matching the name, bring to hero select page
+    """
+
     full_name = request.args.get('full_name')
     token = '2244675209060970'  # Replace with your actual token
     url = f'https://superheroapi.com/api/{token}/search/{hero_name}'
@@ -128,6 +141,7 @@ def show_hero(hero_name):
     else:
         flash('Hero not found!')
         return redirect('/search')
+    
     
     hero_in_db = Hero.query.get(hero['id'])
     # if the hero does not exist in the database, add them
@@ -168,14 +182,14 @@ def add_favorite():
     db.session.commit()
 
     flash('Hero added to favorites!')
-    return redirect('/favorites')  # redirect with hero's name
-
+    return redirect('/favorites')  
 
 
 
 
 @app.route('/favorites')
 def show_favorites():
+    """display current user's favorites heroes"""
     if 'user_id' not in session:
         flash('You must be logged in to do that.')
         return redirect('/login')
@@ -188,6 +202,7 @@ def show_favorites():
 
 @app.route('/favorites/delete', methods=['POST'])
 def delete_favorite():
+    """remove favorite from favorites list"""
     if 'user_id' not in session:
         flash('You must be logged in to do that.')
         return redirect('/login')
