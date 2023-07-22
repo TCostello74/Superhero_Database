@@ -14,7 +14,7 @@ Website: [Hero HQ](https://hero-hq.onrender.com/)(Deployed with Render)
 
 ## Standard User Flow
 
-    First a user will be brought to the home page where they can randomize heros and get a feel for the application. Once they have an idea of who they'd like to search for they can hit search in the nav bar and type in the name of the hero. After being directed to the hero page the user has the option to favorite the hero after creating an account. A user can then repeat this until they have a full personalized list of heros on their favorites page.
+First a user will be brought to the home page where they can randomize heros and get a feel for the application. Once they have an idea of who they'd like to search for they can hit search in the nav bar and type in the name of the hero. After being directed to the hero page the user has the option to favorite the hero after creating an account. A user can then repeat this until they have a full personalized list of heros on their favorites page.
 
 ## Tech Stack
 
